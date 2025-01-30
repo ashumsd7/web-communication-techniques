@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Long Polling Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #1a73e8;
+            margin-bottom: 1rem;
+        }
+        #currentTime {
+            font-size: 1.5rem;
+            color: #5f6368;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>I am Long Polling</h1>
+        <div id="currentTime"></div>
+    </div>
+
+
+
+    <script>
+        let lastData="";
+        function fetchData(lastData) {
+            // first time u send the data with lastData as empty string
+            fetch('http://localhost:3000/getData?lastData='+lastData)
+                .then(response => response.text())
+                .then(data => {
+                    // serves sees the lastData is empty string and sends the data 
+                    // because the data is changed and u r putting the data in lastData and polling again
+                    document.getElementById('currentTime').textContent = data;
+                    console.log("Got the data from server  polling again with data",data);
+                    lastData=data;
+                    fetchData(data);
+        
+                    // after getting the data polling again
+               
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+
+        // Fetch data immediately and then every 2 seconds
+        fetchData();
+      
+    </script>
+
+</body>
+</html>
