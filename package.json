@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "short-polling": "node short-polling/index.js",
     "long-polling": "node long-polling/index.js",
-    "web-sockets": "node web-sockets/index.js"
+    "web-sockets": "node web-sockets/index.js",
+    "server-side-events": "node server-side-events/index.js"
   },
   "repository": {
     "type": "git",
